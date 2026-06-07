@@ -7,4 +7,10 @@
   },
   "main": "@tanstack/react-start/server-entry",
   "compatibility_flags": ["nodejs_compat"],
+  "hyperdrive": [
+    {
+      "binding": "HYPERDRIVE",
+      "id": "cabc3adcf4c44c03b55e2d17aaef7d99",
+    },
+  ],
 }
