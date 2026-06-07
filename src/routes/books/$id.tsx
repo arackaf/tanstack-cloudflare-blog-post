@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
 import { db } from "#/data/db";
 import { books } from "#/drizzle/schema";
@@ -26,7 +26,7 @@ const getBook = createServerFn({ method: "GET" })
         dateAdded: books.dateAdded,
       })
       .from(books)
-      .where(eq(books.id, Number(data.id)))
+      .where(and(eq(books.id, Number(data.id)), eq(books.userId, "106394015208813116232")))
       .limit(1);
 
     if (!book) {
