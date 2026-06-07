@@ -2,12 +2,13 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { and, eq } from "drizzle-orm";
 
-import { db } from "#/data/db";
 import { books } from "#/drizzle/schema";
 
 const getBook = createServerFn({ method: "GET" })
   .validator((data: { id: string }) => data)
-  .handler(async ({ data }) => {
+  .handler(async ({ data, context }) => {
+    const { db } = context;
+
     const [book] = await db
       .select({
         id: books.id,

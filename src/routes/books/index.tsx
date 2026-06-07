@@ -2,10 +2,11 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { desc, eq } from "drizzle-orm";
 
-import { db } from "#/data/db";
 import { books } from "#/drizzle/schema";
 
-const getBooks = createServerFn({ method: "GET" }).handler(async () => {
+const getBooks = createServerFn({ method: "GET" }).handler(async ({ context }) => {
+  const { db } = context;
+
   return db
     .select({
       id: books.id,
@@ -33,21 +34,11 @@ function BooksPage() {
       <ul className="mt-8 flex flex-col gap-3">
         {booksList.map((book) => (
           <li key={book.id}>
-            <Link
-              to="/books/$id"
-              params={{ id: String(book.id) }}
-              className="flex items-center gap-3 hover:underline"
-            >
+            <Link to="/books/$id" params={{ id: String(book.id) }} className="flex items-center gap-3 hover:underline">
               {book.mediumImage || book.smallImage ? (
-                <img
-                  src={book.mediumImage ?? book.smallImage ?? undefined}
-                  alt={book.title}
-                  className="max-w-[50px] shrink-0"
-                />
+                <img src={book.mediumImage ?? book.smallImage ?? undefined} alt={book.title} className="max-w-[50px] shrink-0" />
               ) : (
-                <div className="flex h-[75px] w-[50px] shrink-0 items-center justify-center bg-gray-100 text-xs text-gray-500">
-                  No cover
-                </div>
+                <div className="flex h-[75px] w-[50px] shrink-0 items-center justify-center bg-gray-100 text-xs text-gray-500">No cover</div>
               )}
               <span>{book.title}</span>
             </Link>
