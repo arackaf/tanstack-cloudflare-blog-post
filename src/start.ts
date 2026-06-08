@@ -1,4 +1,4 @@
-//import { env } from "cloudflare:workers";
+import { env } from "cloudflare:workers";
 import { Pool } from "pg";
 import { createCsrfMiddleware, createMiddleware, createStart } from "@tanstack/react-start";
 import { getDb } from "./data/db";
@@ -6,7 +6,7 @@ import { getDb } from "./data/db";
 const globalContextMiddleware = createMiddleware().server(async ({ next }) => {
   try {
     const pool = new Pool({
-      connectionString: process.env.POSTGRES!,
+      connectionString: env.HYPERDRIVE.connectionString,
     });
 
     const db = getDb(pool);
