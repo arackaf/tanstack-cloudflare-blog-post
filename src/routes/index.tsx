@@ -1,10 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
-//import { env } from "cloudflare:workers";
+import { env } from "cloudflare:workers";
 
 const getSecrets = createServerFn({ method: "GET" }).handler(async () => {
-  const secret1 = process.env.SECRET_1;
-  const secret2 = process.env.SECRET_2;
+  const secret1 = env.SECRET_1;
+  const secret2 = env.SECRET_2;
 
   return {
     secret1,
